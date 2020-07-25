@@ -3,14 +3,15 @@ import sqlite3
 
 conn = sqlite3.connect('card.s3db')
 c = conn.cursor()
-c.execute('DROP TABLE card')
-c.execute('''CREATE TABLE card
+c.execute(''' SELECT count(name) FROM sqlite_master WHERE type='table' AND name='card' ''')
+res_table = c.fetchone()
+if res_table is None:
+    c.execute('''CREATE TABLE card
     (id INTEGER PRIMARY KEY,
     number TEXT,
     pin TEXT, 
     balance INTEGER DEFAULT 0)''')
-conn.commit()
-
+    conn.commit()
 
 class Menu:
     def ui_input(self):
