@@ -5,7 +5,7 @@ conn = sqlite3.connect('card.s3db')
 c = conn.cursor()
 c.execute(''' SELECT count(name) FROM sqlite_master WHERE type='table' AND name='card' ''')
 res_table = c.fetchone()
-if res_table is None:
+if res_table[0] == 0:
     c.execute('''CREATE TABLE card
     (id INTEGER PRIMARY KEY,
     number TEXT,
